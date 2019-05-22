@@ -1,12 +1,8 @@
 import React from 'react';
-import {BrowserRouter,Route,Link} from "react-router-dom";
-import createBrowserHistroy from "history/createBrowserHistory";
-import ReactDOM from "react-dom";
+import { Link } from "react-router-dom";
 
 import Blockchain from "./Blockchain";
 import RainbowMenuButton from "./RainbowMenuButton";
-
-
 
 class HomeList extends React.Component {
     createMenuList = (obj) =>{

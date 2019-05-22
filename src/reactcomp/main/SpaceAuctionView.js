@@ -3,44 +3,48 @@ import React from 'react';
 class SpaceAuctionView extends React.Component {
 
     drawList = (auctionList)=>{
-        let itemListToDisplay = auctionList.filter((item)=> (item.item.type === this.props.displayReducer.typeSelector) || (this.props.displayReducer.typeSelector === 'AllTypes'));
-        if(this.props.displayReducer.toggleSelector === '+Toggled'){
-            itemListToDisplay = itemListToDisplay.filter((item)=> item.item.state === true);
-        }
-        else if(this.props.displayReducer.toggleSelector === '-Toggled'){
-            itemListToDisplay = itemListToDisplay.filter((item)=> item.item.state === false);
-        }
+        if(auctionList.length === 0) return <p style={{width: '100%', textAlign: 'center', color: 'white'}}>Initializing.....</p>
+        else {
+            let itemListToDisplay = auctionList.filter((item)=> (item.item.type === this.props.displayReducer.typeSelector) || (this.props.displayReducer.typeSelector === 'AllTypes'));
+            if(this.props.displayReducer.toggleSelector === '+Toggled'){
+                itemListToDisplay = itemListToDisplay.filter((item)=> item.item.state === true);
+            }
+            else if(this.props.displayReducer.toggleSelector === '-Toggled'){
+                itemListToDisplay = itemListToDisplay.filter((item)=> item.item.state === false);
+            }
 
-        return(
-            itemListToDisplay.map((auctionItem)=>{
-                return <li key={auctionItem.item.id}
-                           className='workspace-list'
-                           style={{ color: auctionItem.item.state ? 'red' : '#DDF'}}
-                           onClick={()=>{
-                               this.props.dispatch(this.props.action(auctionItem));
-                               document.getElementById('onClickSound').play()
-                           }}>
-                    <div className='workspace-list__item' style={{paddingLeft: '20px'}}>
-                        {auctionItem.item.name}
-                    </div>
-                    <div  className='workspace-list__item' style={{textAlign: 'center'}}>
-                        Тип {auctionItem.item.type}
-                    </div>
-                    <div  className='workspace-list__item' style={{textAlign: 'center'}}>
-                        {auctionItem.startPrice}
-                    </div>
-                    <div  className='workspace-list__item' style={{textAlign: 'center', cursor: 'pointer'}}
-                          onClick={(event)=>{
-                              event.stopPropagation();this.props.dispatch(this.props.toggleItem(auctionItem.item));
-                              document.getElementById('onClickSound').play()
-                          }}
-                    >
-                        {auctionItem.item.state ? '+' : '-'}
-                    </div>
+             return(
 
-                </li>
-            })
-        )
+                itemListToDisplay.map((auctionItem)=>{
+                    return <li key={auctionItem.item.id}
+                               className='workspace-list'
+                               style={{ color: auctionItem.item.state ? 'red' : '#DDF'}}
+                               onClick={()=>{
+                                   this.props.dispatch(this.props.action(auctionItem));
+                                   document.getElementById('onClickSound').play()
+                               }}>
+                        <div className='workspace-list__item' style={{paddingLeft: '20px'}}>
+                            {auctionItem.item.name}
+                        </div>
+                        <div  className='workspace-list__item' style={{textAlign: 'center'}}>
+                            Тип {auctionItem.item.type}
+                        </div>
+                        <div  className='workspace-list__item' style={{textAlign: 'center'}}>
+                            {auctionItem.startPrice}
+                        </div>
+                        <div  className='workspace-list__item' style={{textAlign: 'center', cursor: 'pointer'}}
+                              onClick={(event)=>{
+                                  event.stopPropagation();this.props.dispatch(this.props.toggleItem(auctionItem.item));
+                                  document.getElementById('onClickSound').play()
+                              }}
+                        >
+                            {auctionItem.item.state ? '+' : '-'}
+                        </div>
+
+                    </li>
+                })
+            )
+        }
     };
 
     render(){
@@ -76,6 +80,7 @@ class SpaceAuctionView extends React.Component {
             </div>
         )
     }
+
 }
 
 export default SpaceAuctionView

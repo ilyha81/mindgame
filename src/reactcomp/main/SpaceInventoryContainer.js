@@ -1,16 +1,16 @@
 import React from 'react';
 import SpaceInventoryView from "./SpaceInventoryView";
 import {CSSTransitionGroup} from "react-transition-group";
-
+import { POPUP_CONFIRMATION_TRUE, SELL_ITEM_FROM_INVENTORY, TOGGLE_ITEM } from '../Actions';
 
 class SpaceInventoryContainer extends React.Component {
 
     confirmationTrue = (item)=>{
         return {
-            type: 'POPUP_CONFIRMATION_TRUE',
+            type: POPUP_CONFIRMATION_TRUE,
             text: 'Удалить предмет ' + item.name + ' за '+(item.price/2)+'?',
             payload: {
-                type: 'SELL_ITEM_FROM_INVENTORY',
+                type: SELL_ITEM_FROM_INVENTORY,
                 payload: item
             }
         }
@@ -18,7 +18,7 @@ class SpaceInventoryContainer extends React.Component {
 
     toggleItem = (item) => {
         return {
-            type: 'TOGGLE_ITEM',
+            type: TOGGLE_ITEM,
             payload: item
         }
     };

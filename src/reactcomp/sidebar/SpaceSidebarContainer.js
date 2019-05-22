@@ -1,18 +1,18 @@
 import React from 'react';
 import SpaceSidebarView from './SpaceSidebarView'
-
+import { SELECT_ITEM_TYPE, SELECT_TOGGLE_MODE } from '../Actions'
 
 class SpaceSidebarContainer extends React.Component {
 
     selectItemType = (text)=>{
         return {
-            type: 'SELECT_ITEM_TYPE',
+            type: SELECT_ITEM_TYPE,
             payload: text
         }
     };
     selectToggleMode = (text)=>{
         return {
-            type: 'SELECT_TOGGLE_MODE',
+            type:SELECT_TOGGLE_MODE,
             payload: text
         }
     };

@@ -1,6 +1,6 @@
 import React from 'react';
-import {CSSTransitionGroup} from "react-transition-group";
-import {Route,Link} from "react-router-dom";
+import { CSSTransitionGroup } from "react-transition-group";
+import { Link } from "react-router-dom";
 
 class SpaceHeaderView extends React.Component {
 
@@ -20,7 +20,7 @@ class SpaceHeaderView extends React.Component {
                              onClick={()=>{this.props.dispatch(this.props.makeSetNamePopUp());
                              document.getElementById('onClickSound').play()}}
                         >
-                            <div style={{fontSize: '20px', height: '30px', lineHeight: '30px', color: (this.props.spaceReducer.userStats.name === 'Guest')?"red":'inherit'}}>{this.props.spaceReducer.userStats.name}, </div>
+                            <div style={{fontSize: '20px', height: '30px', lineHeight: '30px', color: (this.props.spaceReducer.userStats.name === 'Guest')?"red":'lightgreen'}}>{this.props.spaceReducer.userStats.name}, </div>
                             <div style={{fontSize: '16px', height: '20px', lineHeight: '20px'}}>у вас {this.props.spaceReducer.userStats.money} денег!</div>
                         </div>
                     </div>

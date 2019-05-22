@@ -11,7 +11,7 @@ class NameFormView extends React.Component {
     render(){
 
         return(
-            <div style={{position: 'fixed', width: '100%', height: '100%', display: (this.props.spaceReducer.userNameForm.state)?'flex':'none', background: 'rgba(100,100,100,0.5)', justifyContent: 'center', alignContent: 'center', flexFlow: 'column wrap', pointerEvents: 'auto'}}
+            <div style={{position: 'fixed', width: '100%', height: '100%', display: (this.props.spaceReducer.userNameForm.state)?'flex':'none', background: 'rgba(100,100,100,0.5)', justifyContent: 'center', alignContent: 'center', flexFlow: 'column wrap', pointerEvents: 'auto', zIndex: '51'}}
                  onClick={(event)=>{
                      event.stopPropagation();
                      this.props.dispatch(this.props.confirmationFalse());

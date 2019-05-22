@@ -1,15 +1,17 @@
 import React from 'react';
-import {BrowserRouter,Route,Link} from "react-router-dom";
+import { Route } from "react-router-dom";
 import { connect, Provider } from "react-redux";
-import {createStore} from "redux";
-import rootReducer from "./reducers";
+import {mapStateToProps, mainStore} from './reducers/MapStateToProps';
+
 
 import SpaceHeaderContainer from './reactcomp/header/SpaceHeaderContainer';
 import SpaceAuctionContainer from './reactcomp/main/SpaceAuctionContainer';
 import SpaceInventoryContainer from './reactcomp/main/SpaceInventoryContainer';
 import SpaceSidebarContainer from './reactcomp/sidebar/SpaceSidebarContainer';
 import SpaceFooterView from './reactcomp/footer/SpaceFooterView';
-import {mapStateToProps, mainStore} from './reducers/MapStateToProps';
+
+import {FETCH_AUCTION_DATA} from "./reactcomp/Actions";
+import auctionList from "./database/auctionListDefault";
 
 
 const WrappedComponentHeader = connect(mapStateToProps)(SpaceHeaderContainer);
@@ -19,6 +21,22 @@ const WrappedComponentSidebar = connect(mapStateToProps)(SpaceSidebarContainer);
 const WrappedComponentFooter = connect(mapStateToProps)(SpaceFooterView)
 
 class SpaceIndex extends React.Component {
+
+    fetchResult = (auctionList)=>{
+        return {
+            type: FETCH_AUCTION_DATA,
+            payload: auctionList
+        };
+    };
+
+    fetchAuctionData = (time)=>{
+        return new Promise((resolve) => {
+            setTimeout(()=>{
+                resolve(auctionList)
+            }, time);
+        })
+    };
+
 
     render() {
 
@@ -42,6 +60,14 @@ class SpaceIndex extends React.Component {
             </Provider>
         )
     }
+
+    componentDidMount() {
+        this.fetchAuctionData(2000)
+            .then((action) => {
+                this.props.dispatch(this.fetchResult(action));
+            });
+    }
+
 }
 
-export default SpaceIndex
+export default connect(mapStateToProps)(SpaceIndex)

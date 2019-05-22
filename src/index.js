@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import  "./css/main.css";
 
-import {BrowserRouter,Route,Link} from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import createBrowserHistroy from "history/createBrowserHistory";
 
 import RainbowMenu from './reactcomp/rainbowMenu/RainbowMenu';
@@ -11,6 +11,8 @@ import FirstButton from './reactcomp/rainbowMenu/FirstButton';
 import SpaceIndex from './SpaceIndex'
 import PopUpContainer from "./reactcomp/popUps/PopUpContainer";
 import clickSound from "./reactcomp/rainbowMenu/RainbowMenuButton/click.mp3";
+import { Provider } from "react-redux";
+import { mainStore } from "./reducers/MapStateToProps";
 
 
 
@@ -21,7 +23,12 @@ ReactDOM.render(
             <Route exact path='/' component={FirstButton} />
             <Route path='/Mindgame' component={RainbowMenu} />
             <Route exact path='/new.lukomor.mobi' component={()=>{window.location = 'http://new.lukomor.mobi'; return null;} } />
-            <Route path='/Space' component={SpaceIndex} />
+            <Route path='/Space'>
+                <Provider store={mainStore}>
+                    <SpaceIndex />
+                </Provider>
+            </Route>
+
     </BrowserRouter>,
     document.getElementById('mainWindow')
 );
