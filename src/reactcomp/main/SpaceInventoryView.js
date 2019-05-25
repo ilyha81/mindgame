@@ -2,14 +2,25 @@ import React from 'react';
 
 class SpaceInventoryView extends React.Component {
 
-    drawList = (itemList)=>{
+    filterList = (itemList) =>{
+        /* Фильтр на тип */
         let itemListToDisplay = itemList.filter((item)=> (item.type === this.props.displayReducer.typeSelector) || (this.props.displayReducer.typeSelector === 'AllTypes'));
+
+        /* Фильтр на отмеченные */
         if(this.props.displayReducer.toggleSelector === '+Toggled'){
             itemListToDisplay = itemListToDisplay.filter((item)=> item.state === true);
         }
         else if(this.props.displayReducer.toggleSelector === '-Toggled'){
             itemListToDisplay = itemListToDisplay.filter((item)=> item.state === false);
         }
+
+        /* Фильтр на цену. Делим на 2 т.к. по модели у нас цена магазина ликвидации = цена/2 (так же и отображаем и везде считаем потом) */
+        itemListToDisplay = itemListToDisplay.filter((item)=> ((item.price/this.props.priceReduceToSell) >= this.props.displayReducer.priceRange.minValue)&&((item.price/this.props.priceReduceToSell) <= this.props.displayReducer.priceRange.maxValue));
+        return itemListToDisplay;
+    };
+
+    drawList = (itemList)=>{
+        let itemListToDisplay = this.filterList(itemList);
 
         return(
             itemListToDisplay.map((inventoryItem)=>{
@@ -28,7 +39,7 @@ class SpaceInventoryView extends React.Component {
                             Тип {inventoryItem.type}
                         </div>
                         <div  className='workspace-list__item' style={{textAlign: 'center'}}>
-                            {inventoryItem.price / 2}
+                            {inventoryItem.price / this.props.priceReduceToSell}
                         </div>
                         <div  className='workspace-list__item' style={{textAlign: 'center', cursor: 'pointer'}}
                               onClick={(event)=>{
@@ -55,7 +66,7 @@ class SpaceInventoryView extends React.Component {
                         Тип
                     </div>
                     <div className='space-style_inner'>
-
+                        Стоимость
                     </div>
                     <div className='space-style_inner'>
                         Отметить

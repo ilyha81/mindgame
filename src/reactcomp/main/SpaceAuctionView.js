@@ -2,16 +2,27 @@ import React from 'react';
 
 class SpaceAuctionView extends React.Component {
 
+    filterList = (auctionList) =>{
+        /* Фильтр на тип */
+        let itemListToDisplay = auctionList.filter((item)=> (item.item.type === this.props.displayReducer.typeSelector) || (this.props.displayReducer.typeSelector === 'AllTypes'));
+
+        /* Фильтр на отмеченные */
+        if(this.props.displayReducer.toggleSelector === '+Toggled'){
+            itemListToDisplay = itemListToDisplay.filter((item)=> item.item.state === true);
+        }
+        else if(this.props.displayReducer.toggleSelector === '-Toggled'){
+            itemListToDisplay = itemListToDisplay.filter((item)=> item.item.state === false);
+        }
+
+        /* Фильтр на цену */
+        itemListToDisplay = itemListToDisplay.filter((item)=> (item.item.price >= this.props.displayReducer.priceRange.minValue)&&(item.item.price <= this.props.displayReducer.priceRange.maxValue));
+        return itemListToDisplay;
+    };
+
     drawList = (auctionList)=>{
         if(auctionList.length === 0) return <p style={{width: '100%', textAlign: 'center', color: 'white'}}>Initializing.....</p>
         else {
-            let itemListToDisplay = auctionList.filter((item)=> (item.item.type === this.props.displayReducer.typeSelector) || (this.props.displayReducer.typeSelector === 'AllTypes'));
-            if(this.props.displayReducer.toggleSelector === '+Toggled'){
-                itemListToDisplay = itemListToDisplay.filter((item)=> item.item.state === true);
-            }
-            else if(this.props.displayReducer.toggleSelector === '-Toggled'){
-                itemListToDisplay = itemListToDisplay.filter((item)=> item.item.state === false);
-            }
+            let itemListToDisplay = this.filterList(auctionList);
 
              return(
 

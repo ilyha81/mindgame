@@ -1,5 +1,6 @@
 import React from 'react';
 import itemTypeDef from "../../database/itemType";
+import SpaceSideForm from './SpaceSideForm';
 
 class SpaceSidebarView extends React.Component {
 
@@ -56,6 +57,10 @@ class SpaceSidebarView extends React.Component {
                                 Только не отмеченные
                             </li>
                         </ul>
+                        <hr />
+                        <div>Диапазон цен:</div>
+                        <SpaceSideForm setPriceRange={this.props.setPriceRange}
+                                       dispatch={this.props.dispatch}/>
                     </div>
                 </div>
             </div>

@@ -5,13 +5,17 @@ import { POPUP_CONFIRMATION_TRUE, SELL_ITEM_FROM_INVENTORY, TOGGLE_ITEM } from '
 
 class SpaceInventoryContainer extends React.Component {
 
+    /* Коэффициент, по которому высчитывается ликвидационная цена (делим цену магазина на эту величину) */
+    priceReduceToSell = 2;
+
     confirmationTrue = (item)=>{
         return {
             type: POPUP_CONFIRMATION_TRUE,
             text: 'Удалить предмет ' + item.name + ' за '+(item.price/2)+'?',
             payload: {
                 type: SELL_ITEM_FROM_INVENTORY,
-                payload: item
+                payload: item,
+                priceReduceToSell: this.priceReduceToSell
             }
         }
     };
@@ -34,7 +38,8 @@ class SpaceInventoryContainer extends React.Component {
                 transitionEnterTimeout={500}
                 transitionLeave={true}
                 transitionLeaveTimeout={500}>
-                <SpaceInventoryView spaceReducer={this.props.spaceReducer}
+                <SpaceInventoryView priceReduceToSell={this.priceReduceToSell}
+                                    spaceReducer={this.props.spaceReducer}
                                     displayReducer={this.props.displayReducer}
                                     dispatch={this.props.dispatch}
                                     actionSell={this.confirmationTrue}
