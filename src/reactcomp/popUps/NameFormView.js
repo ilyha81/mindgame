@@ -5,7 +5,12 @@ class NameFormView extends React.Component {
         super(props);
         this.state = {
             name: ''
-        }
+        };
+        this.focusRef = React.createRef();
+    }
+
+    componentDidUpdate() {
+        this.focusRef.current.focus();
     }
 
     render(){
@@ -22,7 +27,9 @@ class NameFormView extends React.Component {
                 >
                     <div className='space-style_inner' style={{paddingLeft: '10px', paddingRight: '10px'}}>
                         <div style={{marginTop:'10px'}}>Введите новое имя</div>
-                        <input type='text'  onChange={(event)=>{
+                        <input type='text'
+                               ref={this.focusRef}
+                               onChange={(event)=>{
                                             this.setState({
                                                 name: event.target.value})
                                             }}
